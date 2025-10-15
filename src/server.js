@@ -1,18 +1,19 @@
 import express from 'express';
 import pino from 'pino-http';
 import cors from 'cors';
-import contactsRouter from './routers/contacts.js';
-import { errorHandler } from './middlewares/errorHandler.js';
-import {notFoundHandler} from './middlewares/notFoundHandler.js';
+import { getEnvVar } from './utils/getEnvVar.js';
+import contactRoutes from './routers/contacts.js';
+import errorHandler from './middlewares/errorHandler.js';
+import notFoundHandler from './middlewares/notFoundHandler.js';
 
-
-const PORT = process.env.PORT || 8080;
+const PORT = Number(getEnvVar('PORT', '3000'));
 
 export function setupServer() {
   const app = express();
 
   app.use(express.json());
   app.use(cors());
+
   app.use(
     pino({
       transport: {
@@ -20,12 +21,25 @@ export function setupServer() {
       },
     }),
   );
-  
-  app.use(contactsRouter);
+
+  app.get('/', (req, res) => {
+    res.json({
+      message: `Hello there!!`,
+    });
+  });
+
+  app.use('/contacts', contactRoutes);
+
   app.use(notFoundHandler);
+
   app.use(errorHandler);
 
-  app.listen(PORT, () => {
+  app.listen(PORT, (error) => {
+    if (error) {
+      throw error;
+    }
     console.log(`Server is running on port ${PORT}`);
   });
-};
+}
+
+export default setupServer;
