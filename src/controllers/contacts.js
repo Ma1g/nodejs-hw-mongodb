@@ -14,6 +14,7 @@ export const getAllContactsController = async (req, res) => {
   const { page, perPage } = parsePaginationParams(req.query);
   const { sortBy, sortOrder } = parseSortParams(req.query);
   const filter = parseFilterParams(req.query);
+  const { _id: userId } = req.user;
 
   const contacts = await getAllContacts({
     page,
@@ -21,6 +22,7 @@ export const getAllContactsController = async (req, res) => {
     sortBy,
     sortOrder,
     filter,
+    userId,
   });
 
   res.status(200).json({
@@ -32,8 +34,9 @@ export const getAllContactsController = async (req, res) => {
 
 export const getContactByIdController = async (req, res) => {
   const { contactId } = req.params;
+  const { _id: userId } = req.user;
 
-  const contacts = await getContactById(contactId);
+  const contacts = await getContactById(contactId, userId);
 
   if (contacts === null) {
     throw new createHttpError.NotFound('Contact not found');
@@ -47,7 +50,11 @@ export const getContactByIdController = async (req, res) => {
 };
 
 export const createContactController = async (req, res) => {
-  const contact = await createContacts(req.body);
+  const { _id: userId } = req.user;
+  const contactData = req.body;
+
+  const contact = await createContacts({ ...contactData, userId });
+
   res.status(201).json({
     status: 201,
     message: 'Successfully created contact!',
@@ -57,7 +64,9 @@ export const createContactController = async (req, res) => {
 
 export const deleteContactController = async (req, res) => {
   const { contactId } = req.params;
-  const contact = await deleteContactById(contactId);
+  const { _id: userId } = req.user;
+
+  const contact = await deleteContactById(contactId, userId);
 
   if (contact === null) {
     throw new createHttpError.NotFound('Contact not found');
@@ -67,7 +76,9 @@ export const deleteContactController = async (req, res) => {
 
 export const patchContactControllers = async (req, res) => {
   const { contactId } = req.params;
-  const result = await patchContact(contactId, req.body);
+  const { _id: userId } = req.user;
+
+  const result = await patchContact(contactId, req.body, userId);
 
   if (result === null) {
     throw new createHttpError.NotFound('Contact not found');
