@@ -15,6 +15,11 @@ const contactSchema = new Schema(
       required: false,
       default: '',
     },
+    photo: {
+      type: String,
+      required: false,
+      default: null,
+    },
     isFavourite: {
       type: Boolean,
       default: false,
@@ -24,6 +29,11 @@ const contactSchema = new Schema(
       required: true,
       enum: ['work', 'home', 'personal'],
       default: 'personal',
+    },
+    userId: {
+      type: Schema.Types.ObjectId,
+      ref: 'users',
+      required: true,
     },
   },
   {
