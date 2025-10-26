@@ -1,0 +1,58 @@
+tags:
+  - Auth
+summary: Log in or register with Google
+operationId: loginOrSignupWithGoogle
+description: Log in or register with Google OAuth2.0
+security: []
+parameters:
+  - in: query
+    name: code
+    schema:
+      type: string
+      description: 'Google authorization code'
+      example: 4/0AX4XfWjK...    
+responses:
+  '200':
+    description: Successfully logged in via Google OAuth!
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: Successfully logged in via Google OAuth!
+            data:
+              type: object
+              example:
+                accessToken: 'LjbPvf4lNaZoTMjDLrp4dxx7pa6az9Yv72LsYgREonNh'
+                ticket:
+                  type: object
+                  example:
+                    iss: 'https://accounts.google.com'
+                    azp: '691168304423-ha6mdo3sr4d2ptc7nqs4lg0dm2gto4m.apps.googleusercontent.com'
+                    aud: '691168304423-ha6mdo3sr4d2tjc7nqs4lg0dm2gto4m.apps.googleusercontent.com'
+                    sub: '115051157945706959736'
+                    email: 'bogdandrozd123@gmail.com'
+                    email_verified: true
+                    at_hash: 'j_6kzyD7n1JCK-me3h7wQ'
+                    name: 'Bogdan Drozd'
+                    given_name: 'Bogdan'
+                    family_name: 'Drozd'
+                    iat: '1760888584'
+                    exp: '1760892184'
+  '400':
+    $ref: ../../components/responses/400.yaml
+  '404':
+    $ref: ../../components/responses/404.yaml
+  '409':
+    $ref: ../../components/responses/409.yaml
+  '500':
+    $ref: ../../components/responses/500.yaml
