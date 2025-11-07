@@ -983,8 +983,8 @@
                           "type": "object",
                           "example": {
                             "iss": "https://accounts.google.com",
-                            "azp": "691168304423-ha6mdo3sr4d2ptc7nqs4lg0dm2gto4m.apps.googleusercontent.com",
-                            "aud": "691168304423-ha6mdo3sr4d2tjc7nqs4lg0dm2gto4m.apps.googleusercontent.com",
+                            "azp": "691168322423-ha6mdo3sr4d2ptc7nqs4lg0dm2gto4m.apps.googleusercontent.com",
+                            "aud": "691168322423-ha6mdo3sr4d2tjc7nqs4lg0dm2gto4m.apps.googleusercontent.com",
                             "sub": "115051157945706959736",
                             "email": "bogdandrozd123@gmail.com",
                             "email_verified": true,
@@ -992,8 +992,8 @@
                             "name": "Bogdan Drozd",
                             "given_name": "Bogdan",
                             "family_name": "Drozd",
-                            "iat": "1760888584",
-                            "exp": "1760892184"
+                            "iat": "1760188584",
+                            "exp": "1760192184"
                           }
                         }
                       }
